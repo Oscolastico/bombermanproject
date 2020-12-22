@@ -1,0 +1,231 @@
+import pygame, time, sys
+pygame.init()
+
+ecran = pygame.display.set_mode((768,576))
+#chargement des images nécessaires
+dirt = pygame.image.load("/Users/oscar/Desktop/Bomberman/terrain:dirt.png").convert_alpha()
+box = pygame.image.load("/Users/oscar/Desktop/Bomberman/terrain:box.png").convert_alpha()
+bloc = pygame.image.load("/Users/oscar/Desktop/Bomberman/bloc.png").convert_alpha()
+#importation du logo
+logo = pygame.image.load("/Users/oscar/Desktop/Bomberman/logo.png").convert_alpha()
+#redimension de la taille du logo
+logo = pygame.transform.scale(logo, (640,450))
+#importation du bouton play
+bouton_play = pygame.image.load("/Users/oscar/Desktop/Bomberman/play.png").convert_alpha()
+bouton_play = pygame.transform.scale(bouton_play, (146,57))
+bouton_play_rectangle = bouton_play.get_rect()
+bouton_play_rectangle.x = 320
+bouton_play_rectangle.y = 350
+
+
+#création d'une classe qui correspond au jeu
+class Game:
+    def __init__(self):
+        #savoir si le jeu a commencé
+        self.is_playing = False
+        #chargement du personnage
+        self.perso1 = Perso1()
+        self.perso2 = Perso2()
+    
+    def collision1(self):
+        possible = True
+        for objet in solides :
+            if game.perso1.rectangle1.colliderect(objet) == True :
+                possible = False
+        return possible
+
+    def collision2(self):
+        possible = True
+        for objet in solides :
+            if game.perso2.rectangle2.colliderect(objet) == True :
+                possible = False
+        return possible
+
+    
+
+    def demarrer(self):
+       
+        #déplacements du perso 1
+        touches = pygame.key.get_pressed()    
+        if touches[pygame.K_d] == 1 :
+            game.perso1.deplacement_droite1()
+            #gestion des collisions
+            if game.collision1() == False:
+                game.perso1.deplacement_gauche1()
+        if touches[pygame.K_q] == 1 :
+            game.perso1.deplacement_gauche1()
+            #gestion des collisions
+            if game.collision1() == False:
+                game.perso1.deplacement_droite1()
+        if touches[pygame.K_z] == 1 :
+            game.perso1.deplacement_haut1()
+            #gestion des collisions
+            if game.collision1() == False:
+                game.perso1.deplacement_bas1()
+        if touches[pygame.K_s] == 1 :
+            game.perso1.deplacement_bas1()
+            #gestion des collisions
+            if game.collision1() == False:
+                game.perso1.deplacement_haut1()
+
+        #déplacements du perso 2
+        touches = pygame.key.get_pressed()    
+        if touches[pygame.K_RIGHT] == 1 :
+            game.perso2.deplacement_droite2()
+            #gestion des collisions
+            if game.collision2() == False:
+                game.perso2.deplacement_gauche2()
+        if touches[pygame.K_LEFT] == 1 :
+            game.perso2.deplacement_gauche2()
+            #gestion des collisions
+            if game.collision2() == False:
+                game.perso2.deplacement_droite2()
+        if touches[pygame.K_UP] == 1 :
+            game.perso2.deplacement_haut2()
+            #gestion des collisions
+            if game.collision2() == False:
+                game.perso2.deplacement_bas2()
+        if touches[pygame.K_DOWN] == 1 :
+            game.perso2.deplacement_bas2()
+            #gestion des collisions
+            if game.collision2() == False:
+                game.perso2.deplacement_haut2()
+
+        #affichage de l'image des personnages, le deuxième argument spécifie les coordonnées par rapport à l'écran (ici l'image se positionne par rapport à rectangle)
+        ecran.blit(game.perso1.image, game.perso1.rectangle1) 
+        ecran.blit(game.perso2.image, game.perso2.rectangle2) 
+
+
+
+#création des classes de personnage
+class Perso1(pygame.sprite.Sprite):
+
+    def __init__(self, n1=1, s1=1, p1=1, r1=3, t1=False, v1=1):
+        #intitiation super classe Sprite
+        super().__init__()
+        self.nbbombemax1 = n1
+        self.nbbombeleft1 = s1
+        self.portée1 = p1
+        self.rebours1 = r1
+        self.transpercer1 = t1
+        self.vitesse1 = v1
+        #chargement de l'image associée au personnage
+        self.image = pygame.image.load("/Users/oscar/Desktop/Bomberman/pinguin.png").convert_alpha()
+        self.rectangle1 = self.image.get_rect()
+        #coordonnées du personnage sur l'écran
+        self.rectangle1.x = 150
+        self.rectangle1.y = 200
+
+    #création des méthodes de déplacement
+    def deplacement_droite1(self):
+        self.rectangle1.x += self.vitesse1
+    def deplacement_gauche1(self):
+        self.rectangle1.x -= self.vitesse1
+    def deplacement_haut1(self):
+        self.rectangle1.y -= self.vitesse1
+    def deplacement_bas1(self):
+        self.rectangle1.y += self.vitesse1
+
+
+class Perso2(pygame.sprite.Sprite):
+
+    def __init__(self, n2=1, s2=1, p2=1, r2=3, t2=False, v2=1):
+        #intitiation super classe Sprite
+        super().__init__()
+        self.nbbombemax2 = n2
+        self.nbbombeleft2 = s2
+        self.portée2 = p2
+        self.rebours2 = r2
+        self.transpercer2 = t2
+        self.vitesse2 = v2
+        #chargement de l'image associée au personnage
+        self.image = pygame.image.load("/Users/oscar/Desktop/Bomberman/fox.png").convert_alpha()
+        self.rectangle2 = self.image.get_rect()
+        #coordonnées du personnage sur l'écran
+        self.rectangle2.x = 500
+        self.rectangle2.y = 200
+
+    #création des méthodes de déplacement
+    def deplacement_droite2(self):
+        self.rectangle2.x += self.vitesse2
+    def deplacement_gauche2(self):
+        self.rectangle2.x -= self.vitesse2
+    def deplacement_haut2(self):
+        self.rectangle2.y -= self.vitesse2
+    def deplacement_bas2(self):
+        self.rectangle2.y += self.vitesse2
+
+   
+#chargement du jeu
+game = Game()
+
+#création de la map du jeu
+carte = [[3,3,3,3,3,3,3,3,3,3,3,3],
+[3,2,2,2,2,2,2,1,1,1,1,3],
+[3,1,1,2,1,1,2,1,1,1,1,3],
+[3,1,1,2,1,1,2,1,1,1,1,3],
+[3,1,1,1,1,1,2,1,1,1,1,3],
+[3,1,1,2,1,1,2,1,1,1,1,3],
+[3,1,1,2,1,1,1,1,1,1,1,3],
+[3,1,1,2,1,1,2,1,1,1,1,3],
+[3,3,3,3,3,3,3,3,3,3,3,3]]
+
+#liste des solides que le personnage ne doit pas pouvoir traverser
+solides = []
+indice1 = 0
+for ligne in carte:
+    indice2 = 0
+    for j in ligne:
+        if j == 3 or j == 2 :
+            solides += [pygame.Rect(indice2*64, indice1*64, 64, 64)]
+        indice2 += 1
+    indice1 += 1
+
+#boucle de jeu
+while True:
+    #affichage de la map du jeu
+    indice1 = 0
+    ecran.fill(pygame.Color("#ae7640"))
+    ecran.fill(pygame.Color("#bd8958"))
+    for ligne in carte:
+        indice2 = 0
+        for j in ligne:
+            if j == 1:
+                terre = dirt.get_rect()
+                terre.x = indice2*64
+                terre.y = indice1*64
+                ecran.blit(dirt, terre)
+            if j == 2:
+                boite = box.get_rect()
+                boite.x = indice2*64
+                boite.y = indice1*64
+                ecran.blit(box, boite)
+            if j == 3:
+                bord=bloc.get_rect()
+                bord.x = indice2*64
+                bord.y = indice1*64
+                ecran.blit(bloc, bord)
+            indice2 += 1
+        indice1 += 1
+   
+        #on vérifie si le jeu a commencé ou pas
+        if game.is_playing:
+            #démarrer le jeu
+            game.demarrer()
+        else:
+            #afficher le l'écran de bienvenue
+            ecran.blit(logo, (65,0))
+            ecran.blit(bouton_play, bouton_play_rectangle)
+    #si clic de souris
+
+    pygame.display.update()
+
+    for evenement in pygame.event.get():
+        if evenement.type == pygame.MOUSEBUTTONDOWN:
+            #savoir si la positiopn de la souris se trouve sur le bouton play
+            if bouton_play_rectangle.collidepoint(evenement.pos):
+                #lancer le jeu
+                game.is_playing = True
+        #fermer la fenêtre quand le joueur appuie sur la croix rouge
+        if evenement.type == pygame.QUIT: 
+            sys.exit(0)
