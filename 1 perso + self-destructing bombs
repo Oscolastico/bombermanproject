@@ -1,0 +1,277 @@
+#import os
+#os.chdir("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\")
+import pygame, time, sys
+pygame.init()
+
+ecran=pygame.display.set_mode((768,576))
+dirt = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\Dirt.png").convert_alpha()
+box = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\Box.png").convert_alpha()
+bloc = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\Bloc.png").convert_alpha()
+logo = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\logo.png").convert_alpha()
+#redimension de la taille du logo
+logo = pygame.transform.scale(logo, (640,450))
+#importation du bouton play
+bouton_play = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\logo.png").convert_alpha()
+bouton_play = pygame.transform.scale(bouton_play, (146,57))
+bouton_play_rectangle = bouton_play.get_rect()
+bouton_play_rectangle.x = 320
+bouton_play_rectangle.y = 350
+#modif!!
+imagebombe = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\bombe.png").convert_alpha()
+imagebombe = pygame.transform.scale(imagebombe, (64,64))
+
+#création d'une classe qui correspond au jeu
+class Game:
+    def __init__(self):
+        #savoir si le jeu a commencé
+        self.is_playing = False
+        #chargement du personnage
+        self.perso = Perso()
+
+    def collision(self):
+        possible = True
+        for objet in solides :
+            if game.perso.rectangle.colliderect(objet) == True :
+                possible = False
+        return possible
+
+    def demarrer(self):
+        #déplacements du perso
+        touches = pygame.key.get_pressed()
+        if touches[pygame.K_d] == 1 :
+            game.perso.deplacement_droite()
+            #gestion des collisions
+            if game.collision() == False:
+                game.perso.deplacement_gauche()
+        if touches[pygame.K_q] == 1 :
+            game.perso.deplacement_gauche()
+            #gestion des collisions
+            if game.collision() == False:
+                game.perso.deplacement_droite()
+        if touches[pygame.K_z] == 1 :
+            game.perso.deplacement_haut()
+            #gestion des collisions
+            if game.collision() == False:
+                game.perso.deplacement_bas()
+        if touches[pygame.K_s] == 1 :
+            game.perso.deplacement_bas()
+            #gestion des collisions
+            if game.collision() == False:
+                game.perso.deplacement_haut()
+        #poser une bombe
+        if touches[pygame.K_b] == 1 :
+            game.perso.poser_bombe()
+#!!
+        #mise àjour des bombes solides en fonction de la position du perso
+        i=0
+        while i < (len(bombepassolide)):
+            if game.perso.rectangle.colliderect(bombepassolide[i]) == False:
+                solides.append(bombepassolide[i])
+                del bombepassolide[i]
+            else:
+                i+=1
+
+        #vérification des comptes à rebours
+        j = True
+        while j == True and listebombe != []:
+            if listebombe[0].compte_rebours() < 0:
+                listebombe[0].exploser()
+                del listebombe[0]
+            else:
+                j = False
+
+
+        #affichage de l'image du personnage, le deuxième argument spécifie les coordonnées par rapport à l'écran (ici l'image se positionne par rapport à rectangle)
+        ecran.blit(game.perso.image, game.perso.rectangle)
+
+class bombe:
+        def __init__(self, p, r, t, x, y, perso):
+            self.portée = p
+            self.rebours = r
+            self.transpercer = False
+            self.x = x
+            self.y = y
+            self.bomberect = pygame.Rect(self.x*64, self.y*64, 64, 64)
+            self.settingtime = time.time()
+            self.perso = perso
+
+        def compte_rebours(self):
+            return self.rebours - (time.time() - self.settingtime)
+
+        def exploser(self):
+            #supression sur la carte
+            cartebombe[self.y][self.x] = 0
+            #supression de la liste des (non)solides:
+            if self.bomberect in solides:
+                solides.remove(self.bomberect)
+            else:
+                bombepassolide.remove(self.bomberect)
+            #augmentation du nombre de bombe restant du personnage
+            self.perso.nbbombeleft += 1
+
+#création de la classe du personnage
+class Perso(pygame.sprite.Sprite):
+
+    def __init__(self, n=3, s=3, p=1, r=3, t=False, v=1):
+        #intitiation super classe Sprite
+        super().__init__()
+        self.nbbombemax = n
+        self.nbbombeleft = s
+        self.portée = p
+        self.rebours = r
+        self.transpercer = t
+        self.vitesse = v
+        #chargement de l'image associée au personnage
+        self.image = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\pingouin.png").convert_alpha()
+        self.rectangle = self.image.get_rect()
+        #coordonnées du personnage sur l'écran
+        self.rectangle.x = 150
+        self.rectangle.y = 200
+
+    def positioncarte_x(self):
+        return self.rectangle.x // 64
+
+    def positioncarte_y(self):
+        return self.rectangle.y // 64
+
+
+    #création des méthodes de déplacement
+    def deplacement_droite(self):
+        self.rectangle.x += self.vitesse
+    def deplacement_gauche(self):
+        self.rectangle.x -= self.vitesse
+    def deplacement_haut(self):
+        self.rectangle.y -= self.vitesse
+    def deplacement_bas(self):
+        self.rectangle.y += self.vitesse
+
+    #méthode pour poser les bombes
+    def poser_bombe(self):
+        xbombe = self.positioncarte_x()
+        ybombe = self.positioncarte_y()
+        if self.possibombe(xbombe, ybombe) == True:
+            self.nbbombeleft -= 1
+            #mettre la bombe sur la carte
+            cartebombe[ybombe][xbombe]=1
+            #création de l'objet de classe bombe
+            bomb = bombe(self.portée, self.rebours, self.transpercer, xbombe, ybombe, self)
+            #pour la gestion des collisions avec les bombes
+            bombepassolide.append(bomb.bomberect)
+            #màj liste des bombes
+            listebombe.append(bomb)
+
+    #savoir si on peut poser des bombes
+    def possibombe(self, x, y):
+        possibombe = True
+        #bombes restantes
+        if self.nbbombeleft == 0:
+            possibombe = False
+        #savoir si il y a pas déjà une bombe sur la position
+        if cartebombe[y][x] == 1:
+            possibombe = False
+        return possibombe
+
+
+#chargement du jeu
+game = Game()
+
+#création de la map du jeu
+carte = [[3,3,3,3,3,3,3,3,3,3,3,3],
+[3,2,2,2,2,2,2,1,1,1,1,3],
+[3,1,1,2,1,1,2,1,1,1,1,3],
+[3,1,1,2,1,1,2,1,1,1,1,3],
+[3,1,1,1,1,1,2,1,1,1,1,3],
+[3,1,1,2,1,1,2,1,1,1,1,3],
+[3,1,1,2,1,1,1,1,1,1,1,3],
+[3,1,1,2,1,1,2,1,1,1,1,3],
+[3,3,3,3,3,3,3,3,3,3,3,3]]
+
+#création de la carte des bombes
+cartebombe=[[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0]]
+
+#liste des solides que le personnage ne doit pas pouvoir traverser
+solides = []
+indice1 = 0
+for ligne in carte:
+    indice2 = 0
+    for j in ligne:
+        if j == 3 or j == 2 :
+            solides += [pygame.Rect(indice2*64, indice1*64, 64, 64)]
+        indice2 += 1
+    indice1 += 1
+
+#liste des bombes en attente d'être solide
+bombepassolide = []
+
+#liste des bombes
+listebombe=[]
+
+#boucle de jeu
+while True:
+    #affichage de la map du jeu
+    indice1 = 0
+    ecran.fill(pygame.Color("#ae7640"))
+    ecran.fill(pygame.Color("#bd8958"))
+    for ligne in carte:
+        indice2 = 0
+        for j in ligne:
+            if j == 1:
+                terre = dirt.get_rect()
+                terre.x = indice2*64
+                terre.y = indice1*64
+                ecran.blit(dirt, terre)
+            if j == 2:
+                boite = box.get_rect()
+                boite.x = indice2*64
+                boite.y = indice1*64
+                ecran.blit(box, boite)
+            if j == 3:
+                bord=bloc.get_rect()
+                bord.x = indice2*64
+                bord.y = indice1*64
+                ecran.blit(bloc, bord)
+            indice2 += 1
+        indice1 += 1
+
+    #affichage bombes
+    indicebombe1 = 0
+    for ligne in cartebombe:
+        indicebombe2 = 0
+        for j in ligne:
+            if j == 1:
+                rectanglebombe = imagebombe.get_rect()
+                rectanglebombe.x = indicebombe2*64
+                rectanglebombe.y = indicebombe1*64
+                ecran.blit(imagebombe, rectanglebombe)
+            indicebombe2 += 1
+        indicebombe1 += 1
+
+        #on vérifie si le jeu a commencé ou pas
+        if game.is_playing:
+            #démarrer le jeu
+            game.demarrer()
+        else:
+            #afficher le l'écran de bienvenue
+            ecran.blit(logo, (65,0))
+            ecran.blit(bouton_play, bouton_play_rectangle)
+    #si clic de souris
+
+    pygame.display.update()
+
+    for evenement in pygame.event.get():
+        if evenement.type == pygame.MOUSEBUTTONDOWN:
+            #savoir si la positiopn de la souris se trouve sur le bouton play
+            if bouton_play_rectangle.collidepoint(evenement.pos):
+                #lancer le jeu
+                game.is_playing = True
+        #fermer la fenêtre quand le joueur appuie sur la croix rouge
+        if evenement.type == pygame.QUIT:
+            sys.exit(0)
