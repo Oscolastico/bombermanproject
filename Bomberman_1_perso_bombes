@@ -66,7 +66,7 @@ class Game:
         #mise àjour des bombes solides en fonction de la position du perso
         i=0
         while i < (len(bombepassolide)):
-            if bombepassolide[i][0] != game.perso.positioncarte_x() or bombepassolide[i][1] != game.perso.positioncarte_y():
+            if game.perso.rectangle.colliderect(pygame.Rect(bombepassolide[i][0]*64, bombepassolide[i][1]*64, 64, 64)) == False:
                 solides.append(pygame.Rect(bombepassolide[i][0]*64, bombepassolide[i][1]*64, 64, 64))
                 del bombepassolide[i]
             else:
