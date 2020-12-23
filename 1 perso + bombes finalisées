@@ -2,6 +2,7 @@
 #os.chdir("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\")
 import pygame, time, sys
 pygame.init()
+horloge = pygame.time.Clock()
 
 ecran=pygame.display.set_mode((768,576))
 dirt = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\Dirt.png").convert_alpha()
@@ -393,11 +394,11 @@ while True:
             #afficher le l'écran de bienvenue
             ecran.blit(logo, (65,0))
             ecran.blit(bouton_play, bouton_play_rectangle)
-    #si clic de souris
 
     pygame.display.update()
 
     for evenement in pygame.event.get():
+        #si clic de souris
         if evenement.type == pygame.MOUSEBUTTONDOWN:
             #savoir si la positiopn de la souris se trouve sur le bouton play
             if bouton_play_rectangle.collidepoint(evenement.pos):
@@ -406,3 +407,5 @@ while True:
         #fermer la fenêtre quand le joueur appuie sur la croix rouge
         if evenement.type == pygame.QUIT:
             sys.exit(0)
+    #limiter le nombre de tours de boucles à 60
+    horloge.tick(60)
