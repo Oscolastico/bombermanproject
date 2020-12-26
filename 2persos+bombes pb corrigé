@@ -10,13 +10,13 @@ box = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python
 bloc = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\Bloc.png").convert_alpha()
 logo = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\play.png").convert_alpha()
 #redimension de la taille du logo
-logo = pygame.transform.scale(logo, (640,450))
+logo = pygame.transform.scale(logo, (960,675))
 #importation du bouton play
 bouton_play = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\logo.png").convert_alpha()
-bouton_play = pygame.transform.scale(bouton_play, (146,57))
+bouton_play = pygame.transform.scale(bouton_play, (219,86))
 bouton_play_rectangle = bouton_play.get_rect()
-bouton_play_rectangle.x = 320
-bouton_play_rectangle.y = 350
+bouton_play_rectangle.x = 430
+bouton_play_rectangle.y = 530
 imagebombe = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\bombe.png").convert_alpha()
 imagebombe = pygame.transform.scale(imagebombe, (64,64))
 #images des bonus:
