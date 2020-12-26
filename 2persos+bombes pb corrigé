@@ -4,7 +4,7 @@ import pygame, time, sys
 pygame.init()
 horloge = pygame.time.Clock()
 
-ecran=pygame.display.set_mode((768,576))
+ecran=pygame.display.set_mode((1088,832))
 dirt = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\Dirt.png").convert_alpha()
 box = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\Box.png").convert_alpha()
 bloc = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\Bloc.png").convert_alpha()
@@ -32,9 +32,8 @@ class Game:
         #savoir si le jeu a commencé
         self.is_playing = False
         #chargement du personnage
-        perso0 = Perso()
-        perso1 = Perso()
-        perso1.image = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\renard.png").convert_alpha()
+        perso0 = Perso(64, 11*64, pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\pingouin.png").convert_alpha())
+        perso1 = Perso(15*64, 64, pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\renard.png").convert_alpha())
         self.persos=[perso0, perso1]
 
 
@@ -131,7 +130,7 @@ class Game:
 #création des classes de personnage
 class Perso():
 
-    def __init__(self, n=1, s=7, p=1, r=3, t=False, v=1):
+    def __init__(self, x, y, image, n=1, s=3, p=1, r=3, t=False, v=1):
         #intitiation super classe Sprite
         #super().__init__()
         self.nbbombemax = n
@@ -140,12 +139,12 @@ class Perso():
         self.rebours = r
         self.transpercer = t
         self.vitesse = v
-        self.image = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\pingouin.png").convert_alpha()
+        self.image = image
         #chargement de l'image associée au personnage
         self.rectangle = self.image.get_rect()
         #coordonnées du personnage sur l'écran
-        self.rectangle.x = 150
-        self.rectangle.y = 200
+        self.rectangle.x = x
+        self.rectangle.y = y
 
     #coordonnées du perso sur la carte
     def positioncarte_x(self):
@@ -349,26 +348,34 @@ class bombe:
 game = Game()
 
 #création de la map du jeu
-carte = [[3,3,3,3,3,3,3,3,3,3,3,3],
-[3,2,2,2,2,2,2,1,1,1,1,3],
-[3,1,1,2,1,1,2,1,1,1,1,3],
-[3,1,1,2,1,1,2,1,1,1,1,3],
-[3,1,1,1,1,1,2,1,1,1,1,3],
-[3,1,1,2,1,1,2,1,1,1,1,3],
-[3,1,1,2,1,1,1,1,1,1,1,3],
-[3,1,1,2,1,1,2,1,1,1,1,3],
-[3,3,3,3,3,3,3,3,3,3,3,3]]
+carte = [[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
+[3,2,2,2,2,2,2,2,1,1,2,2,2,1,2,1,3],
+[3,1,3,2,1,1,3,2,1,1,3,2,2,1,3,1,3],
+[3,1,1,2,1,1,2,2,3,1,2,2,3,1,2,1,3],
+[3,1,1,1,1,1,2,2,2,2,2,1,2,1,2,1,3],
+[3,1,1,2,1,1,2,1,3,2,2,1,2,1,2,1,3],
+[3,1,3,2,1,1,3,1,2,2,3,1,2,1,3,1,3],
+[3,1,1,2,1,1,2,1,3,2,2,1,2,1,2,1,3],
+[3,1,1,2,1,1,1,1,2,2,2,1,2,1,2,1,3],
+[3,1,1,2,1,1,2,1,3,2,2,1,2,1,2,1,3],
+[3,1,3,2,1,1,3,1,2,2,3,1,2,1,3,1,3],
+[3,1,1,2,1,1,2,1,2,2,2,1,2,1,2,1,3],
+[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]]
 
 #création de la carte des bombes
-cartebombe=[[0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0]]
+cartebombe=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
 
 #liste des solides que le personnage ne doit pas pouvoir traverser
 solides = []
