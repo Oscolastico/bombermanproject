@@ -16,6 +16,10 @@ bouton_play = pygame.transform.scale(bouton_play, (146,57))
 bouton_play_rectangle = bouton_play.get_rect()
 bouton_play_rectangle.x = 320
 bouton_play_rectangle.y = 350
+imagerègles = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\règlesbombermanimageT.png").convert_alpha()
+imagerègles_rectangle = imagerègles.get_rect()
+imagerègles_rectangle.x = 0
+imagerègles_rectangle.y = 487
 imagebombe = pygame.image.load("C:\\Users\\goran\\Documents\\Sacha travail CPES\\Python Scripts\\projet info\\bombe.png").convert_alpha()
 imagebombe = pygame.transform.scale(imagebombe, (64,64))
 #images des bonus:
@@ -636,7 +640,7 @@ while True:
             #afficher le l'écran de bienvenue
         ecran.blit(logo, (65,0))
         ecran.blit(bouton_play, bouton_play_rectangle)
-
+        ecran.blit(imagerègles, imagerègles_rectangle)
     pygame.display.update()
 
     for evenement in pygame.event.get():
