@@ -684,9 +684,7 @@ while True:
         indiceanim2 = 0
         for h in ligne:
             if h == 1 :
-                temp = time.time()
-                while time.time() - temp < 3:
-                    ecran.blit(explode[anim], (indiceanim2*64,indiceanim1*64) )
+                ecran.blit(explode[anim], (indiceanim2*64,indiceanim1*64) )
             indiceanim2 += 1
         indiceanim1 += 1
     
