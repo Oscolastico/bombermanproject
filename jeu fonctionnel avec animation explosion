@@ -680,7 +680,6 @@ while True:
             indiceanimation2 = 0
             for h in ligne:
                 if h != 0 :
-                    print(carteanim[indiceanimation1][indiceanimation2])
                     carteanim[indiceanimation1][indiceanimation2] += 1
                 if carteanim[indiceanimation1][indiceanimation2] == 8:
                     carteanim[indiceanimation1][indiceanimation2] = 0
