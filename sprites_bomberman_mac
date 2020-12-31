@@ -17,8 +17,6 @@ bouton_play = pygame.transform.scale(bouton_play, (219,86))
 #importation regles
 imagerègles = pygame.image.load("ecran_accueil/regles.png").convert_alpha()
 imagerègles_rectangle = imagerègles.get_rect()
-imagerègles_rectangle.x = 0
-imagerègles_rectangle.y = 487
 #importation image bombe
 imagebombe = pygame.image.load("bomb.png").convert_alpha()
 imagebombe = pygame.transform.scale(imagebombe, (64,64))
