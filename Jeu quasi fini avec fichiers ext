@@ -1,5 +1,4 @@
 import os
-os.chdir("/Users/mohamedbouabdallah/Documents/cpes 2/cours/info2/projet Bomberman/sprites_bomberMan")
 import pygame, time, sys, random
 #vérification de l'OS
 if os.name == 'nt': # Windows
