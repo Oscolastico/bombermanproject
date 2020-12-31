@@ -1,0 +1,45 @@
+import os
+os.chdir("Entrer le chemin du dossier des sprites")
+import pygame
+pygame.init()
+ecran = pygame.display.set_mode((1088,832))
+#chargement des images nécessaires
+dirt = pygame.image.load("terrain/dirt.png").convert_alpha()
+box = pygame.image.load("terrain/box.png").convert_alpha()
+bloc = pygame.image.load("terrain/bloc.png").convert_alpha()
+#importation du logo
+logo = pygame.image.load("ecran_accueil/logobomber.png").convert_alpha()
+#redimension de la taille du logo
+logo = pygame.transform.scale(logo, (640,450))
+#importation bouton play
+bouton_play = pygame.image.load("ecran_accueil/game-buttons.png").convert_alpha()
+bouton_play = pygame.transform.scale(bouton_play, (219,86))
+#importation regles
+imagerègles = pygame.image.load("ecran_accueil/regles.png").convert_alpha()
+imagerègles_rectangle = imagerègles.get_rect()
+imagerègles_rectangle.x = 0
+imagerègles_rectangle.y = 487
+#importation image bombe
+imagebombe = pygame.image.load("bomb.png").convert_alpha()
+imagebombe = pygame.transform.scale(imagebombe, (64,64))
+#images des bonus:
+Imbonusbombe = pygame.image.load("bonus/bonusbombe.png").convert_alpha()
+Imbonusvitesse = pygame.image.load("bonus/bonusvitesse.png").convert_alpha()
+Imbonustranspercer = pygame.image.load("bonus/bonustranspercer.png").convert_alpha()
+Imbonusportée = pygame.image.load("bonus/bonusportee.png").convert_alpha()
+Imbonusdétonation = pygame.image.load("bonus/bonusdet.png").convert_alpha()
+Imbonusvie = pygame.image.load("bonus/bonusvie.png").convert_alpha()
+#importation image monstre statique et mort perso violet
+monstreV_stat = pygame.image.load("Monstre_violet/MonstreV0.png").convert_alpha()
+monstreV_mort = pygame.image.load("Monstre_violet/MonstreV_mort.png").convert_alpha()
+#importation image monstre statique et mort perso rouge
+monstreR_stat = pygame.image.load("Monstre_rouge/MonstreR0.png").convert_alpha()
+monstreR_mort = pygame.image.load("Monstre_rouge/MonstreR_mort.png").convert_alpha()
+#importation images animation du persos violet vers la droite et la gauche
+MonstreVd = [pygame.image.load("Monstre_violet/Vdroite/monstreVd-%d.png" %i).convert_alpha() for i in range(1,9)] 
+MonstreVg = [pygame.image.load("Monstre_violet/Vgauche/monstreVg-%d.png" %i).convert_alpha() for i in range(1,9)]
+#importation images animation du persos rouge vers la droite et la gauche
+MonstreRd = [pygame.image.load("Monstre_rouge/Rdroite/MonstreRd-%d.png" %i).convert_alpha() for i in range(1,9)] 
+MonstreRg = [pygame.image.load("Monstre_rouge/Rgauche/MonstreRg-%d.png" %i).convert_alpha() for i in range(1,9)]
+#importation animation explosion
+explode = [pygame.image.load("explosion/explode-%d.png" %i).convert_alpha() for i in range(1,9)]
