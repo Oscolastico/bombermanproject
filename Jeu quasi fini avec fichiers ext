@@ -108,6 +108,7 @@ class Game:
             #poser une bombe
             if touches[pygame.K_a] == 1 :
                 game.persos[0].poser_bombe()
+                ecran.blit(sp.monstreV_stat, (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
             #le perso est statique
             elif not(touches[pygame.K_d] == 1 or touches[pygame.K_q] == 1 or touches[pygame.K_z] == 1 or touches[pygame.K_s] == 1):
                 ecran.blit(sp.monstreV_stat, (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
