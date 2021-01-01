@@ -110,6 +110,8 @@ class Game:
             #poser une bombe
             if touches[pygame.K_a] == 1 :
                 game.persos[0].poser_bombe()
+            if touches[pygame.K_g] == 1 and game.persos[0].détonation == True:
+                game.persos[0].faitpetertouteslesbombes()
                 ecran.blit(sp.monstreV_stat, (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
             #le perso est statique
             if not(touches[pygame.K_d] == 1 or touches[pygame.K_q] == 1 or touches[pygame.K_z] == 1 or touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 0 and touches[pygame.K_s] == 0) or (touches[pygame.K_d] == 0 and touches[pygame.K_q] == 0 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1):
@@ -146,8 +148,6 @@ class Game:
                         game.persos[1].deplacement_haut()
             if touches[pygame.K_m] == 1 :
                 game.persos[1].poser_bombe()
-            if touches[pygame.K_g] == 1 and game.persos[0].détonation == True:
-                game.persos[0].faitpetertouteslesbombes()
             if touches[pygame.K_k] == 1 and game.persos[1].détonation == True:
                 game.persos[1].faitpetertouteslesbombes()
             #if not(touches[pygame.K_d] == 1 or touches[pygame.K_q] == 1 or touches[pygame.K_z] == 1 or touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 0 and touches[pygame.K_s] == 0) or (touches[pygame.K_d] == 0 and touches[pygame.K_q] == 0 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1):
