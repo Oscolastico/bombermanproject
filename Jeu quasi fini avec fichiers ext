@@ -150,7 +150,7 @@ class Game:
                 game.persos[0].faitpetertouteslesbombes()
             if touches[pygame.K_k] == 1 and game.persos[1].détonation == True:
                 game.persos[1].faitpetertouteslesbombes()
-            if not(touches[pygame.K_d] == 1 or touches[pygame.K_q] == 1 or touches[pygame.K_z] == 1 or touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 0 and touches[pygame.K_s] == 0) or (touches[pygame.K_d] == 0 and touches[pygame.K_q] == 0 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1):
+            #if not(touches[pygame.K_d] == 1 or touches[pygame.K_q] == 1 or touches[pygame.K_z] == 1 or touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 0 and touches[pygame.K_s] == 0) or (touches[pygame.K_d] == 0 and touches[pygame.K_q] == 0 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1):
                 #ecran.blit(sp.monstreR_stat, (game.persos[1].rectangle.x, game.persos[1].rectangle.y))
         #else :
             #ecran.blit(perso_mort, (game.persos[1].rectangle.x, game.persos[1].rectangle.y)
