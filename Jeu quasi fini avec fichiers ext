@@ -113,7 +113,7 @@ class Game:
             elif not(touches[pygame.K_d] == 1 or touches[pygame.K_q] == 1 or touches[pygame.K_z] == 1 or touches[pygame.K_s] == 1):
                 ecran.blit(sp.monstreV_stat, (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
         else :
-            ecran.blit(MonstreV_mort, (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
+            ecran.blit(sp.monstreV_mort, (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
             self.FinDuJeu()
 
 
