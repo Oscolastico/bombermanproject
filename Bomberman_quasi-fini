@@ -84,86 +84,91 @@ class Game:
         #déplacements du perso 1
         touches = pygame.key.get_pressed()
         if self.persos[0].vivant :
-            if touches[pygame.K_d] == 1 :
-                self.persos[0].droite = True
-                self.persos[0].deplacement_droite()
-                sprite0.drawD()
-                sprite0.advanceImage()
-                #gestion des collisions
-                if game.collision0() == False:
-                    self.persos[0].deplacement_gauche()
-            if touches[pygame.K_q] == 1 :
-                self.persos[0].droite = False
-                self.persos[0].deplacement_gauche()
-                sprite0.drawG()
-                sprite0.advanceImage()
-                #gestion des collisions
-                if self.collision0() == False:
+            if touches[pygame.K_d] == 0 or touches[pygame.K_q] == 0:
+                if touches[pygame.K_d] == 1 :
+                    self.persos[0].droite = True
                     self.persos[0].deplacement_droite()
-            if touches[pygame.K_z] == 1 :
-                if self.persos[0].droite :
                     sprite0.drawD()
                     sprite0.advanceImage()
-                else :
+                    #gestion des collisions
+                    if game.collision0() == False:
+                        self.persos[0].deplacement_gauche()
+                if touches[pygame.K_q] == 1 :
+                    self.persos[0].droite = False
+                    self.persos[0].deplacement_gauche()
                     sprite0.drawG()
                     sprite0.advanceImage()
-                self.persos[0].deplacement_haut()
-                #gestion des collisions
-                if self.collision0() == False:
-                    self.persos[0].deplacement_bas()
-            if touches[pygame.K_s] == 1 :
-                if game.persos[0].droite :
-                    sprite0.drawD()
-                    sprite0.advanceImage()
-                else :
-                    sprite0.drawG()
-                    sprite0.advanceImage()
-                game.persos[0].deplacement_bas()
-                #gestion des collisions
-                if game.collision0() == False:
-                    game.persos[0].deplacement_haut()
+                    #gestion des collisions
+                    if self.collision0() == False:
+                        self.persos[0].deplacement_droite()
+            if touches[pygame.K_z] == 0 or touches[pygame.K_s] == 0:
+                if touches[pygame.K_z] == 1 :
+                    if self.persos[0].droite :
+                        sprite0.drawD()
+                        sprite0.advanceImage()
+                    else :
+                        sprite0.drawG()
+                        sprite0.advanceImage()
+                    self.persos[0].deplacement_haut()
+                    #gestion des collisions
+                    if self.collision0() == False:
+                        self.persos[0].deplacement_bas()
+                if touches[pygame.K_s] == 1 :
+                    if game.persos[0].droite :
+                        sprite0.drawD()
+                        sprite0.advanceImage()
+                    else :
+                        sprite0.drawG()
+                        sprite0.advanceImage()
+                    game.persos[0].deplacement_bas()
+                    #gestion des collisions
+                    if game.collision0() == False:
+                        game.persos[0].deplacement_haut()
             #poser une bombe
             if touches[pygame.K_a] == 1 :
                 game.persos[0].poser_bombe()
+                ecran.blit(sp.monstreV_stat, (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
             #le perso est statique
-            elif not(touches[pygame.K_d] == 1 or touches[pygame.K_q] == 1 or touches[pygame.K_z] == 1 or touches[pygame.K_s] == 1):
-                ecran.blit(pygame.image.load("/Users/oscar/Desktop/Bomberman/Monstre_violet/MonstreV0.png").convert_alpha(), (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
+            if not(touches[pygame.K_d] == 1 or touches[pygame.K_q] == 1 or touches[pygame.K_z] == 1 or touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 0 and touches[pygame.K_s] == 0) or (touches[pygame.K_d] == 0 and touches[pygame.K_q] == 0 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1):
+                ecran.blit(sp.monstreV_stat, (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
         else :
-            ecran.blit(MonstreV_mort, (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
+            ecran.blit(sp.monstreV_mort, (game.persos[0].rectangle.x, game.persos[0].rectangle.y))
             self.FinDuJeu()
 
 
 
         #déplacements du perso 2
         if game.persos[1].vivant :
-            if touches[pygame.K_RIGHT] == 1 :
-                game.persos[1].deplacement_droite()
-                #gestion des collisions
-                if game.collision1() == False:
-                    game.persos[1].deplacement_gauche()
-            if touches[pygame.K_LEFT] == 1 :
-                game.persos[1].deplacement_gauche()
-                #gestion des collisions
-                if game.collision1() == False:
+            if touches[pygame.K_RIGHT] == 0 or touches[pygame.K_LEFT] == 0:
+                if touches[pygame.K_RIGHT] == 1 :
                     game.persos[1].deplacement_droite()
-            if touches[pygame.K_UP] == 1 :
-                game.persos[1].deplacement_haut()
-                #gestion des collisions
-                if game.collision1() == False:
-                    game.persos[1].deplacement_bas()
-            if touches[pygame.K_DOWN] == 1 :
-                game.persos[1].deplacement_bas()
-                #gestion des collisions
-                if game.collision1() == False:
+                    #gestion des collisions
+                    if game.collision1() == False:
+                        game.persos[1].deplacement_gauche()
+                if touches[pygame.K_LEFT] == 1 :
+                    game.persos[1].deplacement_gauche()
+                    #gestion des collisions
+                    if game.collision1() == False:
+                        game.persos[1].deplacement_droite()
+            if touches[pygame.K_DOWN] == 0 or touches[pygame.K_UP] == 0:
+                if touches[pygame.K_UP] == 1 :
                     game.persos[1].deplacement_haut()
+                    #gestion des collisions
+                    if game.collision1() == False:
+                        game.persos[1].deplacement_bas()
+                if touches[pygame.K_DOWN] == 1 :
+                    game.persos[1].deplacement_bas()
+                    #gestion des collisions
+                    if game.collision1() == False:
+                        game.persos[1].deplacement_haut()
             if touches[pygame.K_m] == 1 :
                 game.persos[1].poser_bombe()
             if touches[pygame.K_g] == 1 and game.persos[0].détonation == True:
                 game.persos[0].faitpetertouteslesbombes()
             if touches[pygame.K_k] == 1 and game.persos[1].détonation == True:
                 game.persos[1].faitpetertouteslesbombes()
-            #elif not(touches[pygame.K_d] == 1 or touches[pygame.K_q] == 1 or touches[pygame.K_z] == 1 or touches[pygame.K_s] == 1):
-                #ecran.blit(pygame.image.load("").convert_alpha(), (game.persos[1].rectangle.x, game.persos[1].rectangle.y))
+            if not(touches[pygame.K_d] == 1 or touches[pygame.K_q] == 1 or touches[pygame.K_z] == 1 or touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 0 and touches[pygame.K_s] == 0) or (touches[pygame.K_d] == 0 and touches[pygame.K_q] == 0 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1) or (touches[pygame.K_d] == 1 and touches[pygame.K_q] == 1 and touches[pygame.K_z] == 1 and touches[pygame.K_s] == 1):
+                #ecran.blit(sp.monstreR_stat, (game.persos[1].rectangle.x, game.persos[1].rectangle.y))
         #else :
             #ecran.blit(perso_mort, (game.persos[1].rectangle.x, game.persos[1].rectangle.y)
             #self.FinDuJeu()
